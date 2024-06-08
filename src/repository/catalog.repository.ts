@@ -1,6 +1,6 @@
-import { ICatalog } from "../interface/catalog.interface";
+import { ICatalogInterface } from "../interface/catalog.interface";
 
-export class CatalogRepository implements ICatalog {
+export class CatalogRepository implements ICatalogInterface {
     create(data: ProductModel): Promise<ProductModel> {
         throw new Error("Method not implemented.");
     }

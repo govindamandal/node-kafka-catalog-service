@@ -1,4 +1,4 @@
-export interface ICatalog {
+export interface ICatalogInterface {
     create(data: ProductModel): Promise<ProductModel>;
     update(data: ProductModel): Promise<ProductModel>;
     delete(id: number): void;
