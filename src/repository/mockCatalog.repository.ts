@@ -3,7 +3,6 @@ import { CatalogRepository } from "./catalog.repository";
 export class MockCatalogRepository implements CatalogRepository {
   create(data: ProductModel): Promise<ProductModel> {
     const mockProduct = {
-      id: 123,
       ...data,
     } as ProductModel;
     return Promise.resolve(mockProduct);
