@@ -6,7 +6,6 @@ const StartServer = async () => {
     app.listen(PORT, () => {
         console.log(`Server is running at port ${PORT}`);
     });
-
     process.on('uncaughtException', async (err) => {
         console.log(err);
         process.exit(1);
