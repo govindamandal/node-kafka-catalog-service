@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
-    "start": "npm run build && node build/server.js",
+    "start": "npm run build && node build/src/server.js",
     "build": "rimraf ./build && tsc",
     "test": "jest"
   },
