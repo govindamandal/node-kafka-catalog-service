@@ -1,0 +1,26 @@
+name: Deploy to Production
+
+on:
+  workflow_run:
+    workflows: ["Docker Image CI"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Check out the repository
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Pull the Docker image from Docker Hub
+    - name: Pull Docker image
+      run: sudo docker pull govindamandal/cicd-pipeline:latest
+    - name: Stop old docker container
+      run: sudo docker stop cicd-pipeline || true
+    - name: Remove old docker container
+      run: sudo docker rm -f cicd-pipeline || true
+    - name: Run Docker container
+      run: sudo docker run -d -p 8080:8080 --name cicd-pipeline govindamandal/cicd-pipeline:latest
