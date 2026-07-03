@@ -147,8 +147,7 @@ describe('catalogService', () => {
             const product = productFactory.build();
 
             jest.spyOn(repository, 'delete').mockImplementationOnce(() => Promise.reject(new Error('product does not exists')));
-            const result = await service.deleteProduct(product.id);
-            expect(result).rejects.toThrow('product does not exists');
+            await expect(service.deleteProduct(product.id)).rejects.toThrow('product does not exists');
         });
     });
 })
