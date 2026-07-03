@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach, afterEach, jest } from '@jest/globals';
 import { CatalogRepository } from "../../repository/catalog.repository"
 import { MockCatalogRepository } from "../../repository/mockCatalog.repository";
 import { CatalogService } from "../catalog.service";
@@ -104,7 +105,7 @@ describe('catalogService', () => {
             const results = await service.getProducts(limit, 0);
 
             expect(results.length).toEqual(limit);
-            expect(results).toMatchObject(products);
+            expect(results).toEqual(products);
         });
 
         test('should throw an error with no product found', async () => {
@@ -125,7 +126,7 @@ describe('catalogService', () => {
                 .mockImplementationOnce(() => Promise.resolve(product));
             
             const result = await service.getProduct(product.id);
-            expect(result).toMatchObject(product);
+            expect(result).toEqual(product);
         })
     });
 
@@ -141,13 +142,13 @@ describe('catalogService', () => {
             expect(result).toMatchObject({ id: product.id });
         });
 
-        // test('should throw an error with product does not exist', async () => {
-        //     const service = new CatalogService(repository);
-        //     const product = productFactory.build();
+        test('should throw an error with product does not exist', async () => {
+            const service = new CatalogService(repository);
+            const product = productFactory.build();
 
-        //     jest.spyOn(repository, 'delete').mockImplementationOnce(() => Promise.reject(new Error('product does not exists')));
-        //     const result = await service.deleteProduct(product.id);
-        //     expect(result).rejects.toThrow('product does not exists');
-        // });
+            jest.spyOn(repository, 'delete').mockImplementationOnce(() => Promise.reject(new Error('product does not exists')));
+            const result = await service.deleteProduct(product.id);
+            expect(result).rejects.toThrow('product does not exists');
+        });
     });
 })
