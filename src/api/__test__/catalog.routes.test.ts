@@ -33,7 +33,35 @@ describe('catalogRouter', () => {
         .set('Content-Type', 'application/json');
 
       expect(response.status).toBe(201);
-    //   expect(response.body).toEqual({ message: 'Product created!' });
+      expect(response.body).toEqual(product);
+    });
+
+    test('Should response with validation error 400', async () => {
+      const requestBody = mockRequest();
+
+      const response = await request(app)
+        .post('/products')
+        .send({ ...requestBody, name: ""})
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json');
+
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual("name should not be empty");
+    });
+
+    test('Should response with an internal error code 500', async () => {
+      const requestBody = mockRequest();
+
+       jest.spyOn(catalogService, 'createProduct').mockImplementationOnce(() => Promise.reject(new Error('Error occurred on product creation')));
+
+      const response = await request(app)
+        .post('/products')
+        .send(requestBody)
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json');
+
+      expect(response.status).toBe(500);
+      expect(response.body).toEqual({ error: 'Error occurred on product creation' });
     });
   });
 });
