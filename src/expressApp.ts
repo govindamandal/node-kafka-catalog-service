@@ -1,5 +1,5 @@
 import express from 'express';
-import catalogRouter from './api/rest/catalog.route';
+import catalogRouter from './api/catalog.route';
 
 const app = express();
 app.use(express.json())
